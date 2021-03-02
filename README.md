@@ -10,7 +10,7 @@ type Answer = Calc<"(3+4-1)*2/2">;
 const a: Answer = 6;
 ```
 
-![capture](capture.gif)
+![capture](https://raw.githubusercontent.com/Quramy/abacus-ts/main/capture.gif)
 
 ## License
 MIT
