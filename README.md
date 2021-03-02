@@ -12,5 +12,7 @@ const a: Answer = 6;
 
 ![capture](https://raw.githubusercontent.com/Quramy/abacus-ts/main/capture.gif)
 
+[Try it with TypeScript Playground!](https://www.typescriptlang.org/play?#code/JYWwDg9gTgLgBAbzgYQIYBsDGcC+cBmUEIcARKgEaqYCuAzgLQx2kDcAUOzAJ5gCmcAIIA7OgHc+UOAF4UGTAB5SACgDMAagAsDAIwBKAFQAmAPRHSAPg7tMEUfFQAuIaIlTZANlZA)
+
 ## License
 MIT
