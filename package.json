@@ -1,0 +1,27 @@
+{
+  "name": "abacus-ts",
+  "version": "1.0.0-alpha.0",
+  "description": "Calculator implemented by only TypeScript type operation",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Quramy/abacus-ts.git"
+  },
+  "keywords": [
+    "TypeScript"
+  ],
+  "author": "Quramy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Quramy/abacus-ts/issues"
+  },
+  "homepage": "https://github.com/Quramy/abacus-ts#readme",
+  "devDependencies": {
+    "prettier": "^2.2.1",
+    "typescript": "^4.2.2"
+  }
+}
