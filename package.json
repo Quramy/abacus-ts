@@ -1,6 +1,6 @@
 {
   "name": "abacus-ts",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "description": "Calculator implemented by only TypeScript type operation",
   "main": "index.js",
   "types": "index.d.ts",
