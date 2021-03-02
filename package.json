@@ -1,18 +1,19 @@
 {
   "name": "abacus-ts",
-  "version": "1.0.0-alpha.1",
-  "description": "Calculator implemented by only TypeScript type operation",
+  "version": "1.0.0",
+  "description": "Mini calculator implemented by only TypeScript type operation",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tsc"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Quramy/abacus-ts.git"
   },
   "keywords": [
-    "TypeScript"
+    "TypeScript",
+    "Joke"
   ],
   "author": "Quramy",
   "license": "MIT",
