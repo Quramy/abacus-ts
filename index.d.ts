@@ -7,7 +7,6 @@
 // num      = "1" | "2" | "3" | ,,,
 // ```
 
-
 // Internal represation of non-negative integer
 export type E = null;
 export type Nat = E[];
@@ -144,7 +143,6 @@ export type Tokenize<Text extends string, S extends TokenizeState = InitialState
   Text extends `9${infer Rest}` ? Tokenize<Rest, Unshift<S, 9>> :
   TokenizeFailure<Text>;
 
-
 // AST
 // Node kinds
 
@@ -153,30 +151,30 @@ export type LiteralNode<V extends Nat = Nat> = {
   value: V;
 };
 
-export type BaseBinaryExpressionNode = {
-  kind: "Binary";
+export type BinaryExpressionNode = {
+  kind: "BinaryExpression";
   left: ExpressionNode;
   right: ExpressionNode;
   operation: keyof Operations<any, any>;
 };
 
-export type AddNode = BaseBinaryExpressionNode & {
-  operation: "Add";
-};
-
-export type MultiplyNode = BaseBinaryExpressionNode & {
-  operation: "Multiply";
-};
-
-export type SubNode = BaseBinaryExpressionNode & {
-  operation: "Sub";
-};
-export type DivideNode = BaseBinaryExpressionNode & {
-  operation: "Divide";
-};
-
-export type BinaryExpressionNode = AddNode | SubNode | MultiplyNode | DivideNode;
 export type ExpressionNode = LiteralNode | BinaryExpressionNode;
+
+type CreateLiteral<V extends Nat> = {
+  kind: "Literal";
+  value: V;
+};
+
+type CreateBinaryExpression<
+  Op extends keyof Operations<any, any>,
+  Left extends ExpressionNode,
+  Right extends ExpressionNode
+> = {
+  kind: "BinaryExpression";
+  operation: Op;
+  left: Left;
+  right: Right;
+};
 
 // Parse
 
@@ -194,9 +192,8 @@ export type ParseFailure<T extends Tokens = Tokens, S extends string = string> =
 type ConsumeToken<Symbol extends Token, T extends Tokens> = [Symbol, ...T];
 type ConsumeNatToken<NT extends NatToken, T extends Tokens> = [NT, ...T];
 
-
 type ParseNum<T extends Tokens> = T extends ConsumeNatToken<infer NT, infer T>
-  ? ParseResult<T, LiteralNode<NT["value"]>>
+  ? ParseResult<T, CreateLiteral<NT["value"]>>
   : ParseFailure<T, "Number expected.">;
 
 type ParsePrimary<T extends Tokens> = T extends ConsumeToken<LPToken, infer T>
@@ -215,13 +212,13 @@ type ParseExpr<T extends Tokens> = ParseMul<T> extends infer R
 type ParseExprLoop<T extends Tokens, Left extends ExpressionNode> = T extends ConsumeToken<PlusToken, infer T>
   ? ParseMul<T> extends infer R
     ? R extends ParseResult<infer T, infer Right>
-      ? ParseExprLoop<T, { kind: "Binary"; operation: "Add"; left: Left; right: Right }>
+      ? ParseExprLoop<T, CreateBinaryExpression<"Add", Left, Right>>
       : R
     : never
   : T extends ConsumeToken<MinusToken, infer T>
   ? ParseMul<T> extends infer R
     ? R extends ParseResult<infer T, infer Right>
-      ? ParseExprLoop<T, { kind: "Binary"; operation: "Sub"; left: Left; right: Right }>
+      ? ParseExprLoop<T, CreateBinaryExpression<"Sub", Left, Right>>
       : R
     : never
   : ParseResult<T, Left>;
@@ -234,13 +231,13 @@ type ParseMul<T extends Tokens> = ParsePrimary<T> extends infer R
 type ParseMulLoop<T extends Tokens, Left extends ExpressionNode> = T extends ConsumeToken<TimesToken, infer T>
   ? ParsePrimary<T> extends infer R
     ? R extends ParseResult<infer T, infer Right>
-      ? ParseMulLoop<T, { kind: "Binary"; operation: "Multiply"; left: Left; right: Right }>
+      ? ParseMulLoop<T, CreateBinaryExpression<"Multiply", Left, Right>>
       : R
     : never
   : T extends ConsumeToken<SlashToken, infer T>
   ? ParsePrimary<T> extends infer R
     ? R extends ParseResult<infer T, infer Right>
-      ? ParseMulLoop<T, { kind: "Binary"; operation: "Divide"; left: Left; right: Right }>
+      ? ParseMulLoop<T, CreateBinaryExpression<"Divide", Left, Right>>
       : R
     : never
   : ParseResult<T, Left>;
