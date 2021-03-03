@@ -125,6 +125,8 @@ export type Append<S extends TokenizeState, T extends Tokens = []> = S["buffer"]
 export type Tokenize<Text extends string, S extends TokenizeState = InitialState> = 
   Text extends "" ? Append<S>["tokens"] :
   Text extends ` ${infer Rest}` ? Tokenize<Rest, Append<S>> :
+  Text extends `\t${infer Rest}` ? Tokenize<Rest, Append<S>> :
+  Text extends `\n${infer Rest}` ? Tokenize<Rest, Append<S>> :
   Text extends `(${infer Rest}` ? Tokenize<Rest, Append<S, [LPToken]>> :
   Text extends `)${infer Rest}` ? Tokenize<Rest, Append<S, [RPToken]>> :
   Text extends `+${infer Rest}` ? Tokenize<Rest, Append<S, [PlusToken]>> :
