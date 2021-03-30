@@ -1,10 +1,11 @@
-// EBNF
+// BNF
 //
 // ```
-// expr     = mul("+" mul | "-" mul)*
-// mul      = primary("*" primary | "/" primary)*
-// primary  = "(" expr ")" | num
-// num      = "1" | "2" | "3" | ,,,
+// expr   ::= mul("+" mul | "-" mul)*
+// mul    ::= prim("*" prim | "/" prim)*
+// prim   ::= "(" expr ")" | nat
+// nat    ::= digit+
+// digit  ::= "0" | ... | "9"
 // ```
 
 // Internal represation of non-negative integer
